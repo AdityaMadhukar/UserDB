@@ -5,7 +5,7 @@ const users = require("../models/userSchema");
 router.post("/create", async (req, res) => {
     const { first_name, last_name, email, gender, avatar, domain, available } = req.body;
     if (!first_name || !last_name || !email || !gender || !avatar || !domain || available == null) {
-        res.status(404).send("Input required data");
+        res.status(404).json("Input required data");
     }
 
     try {
@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
         }
     }
     catch (err) {
-        res.status(500).send("Internal server Error", err);
+        res.status(500).json("Internal server Error");
     }
 });
 
@@ -56,7 +56,7 @@ router.get("/getdata", async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({error: true, message: "Internal Server Error"});
+        res.status(500).json("Internal Server Error");
     }
 });
 
