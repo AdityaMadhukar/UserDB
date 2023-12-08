@@ -40,7 +40,7 @@ router.get("/getdata", async (req, res) => {
         var userdata = data.filter((item) => {
             return keys.some((key)=> item[key].toLowerCase().includes(q))&&((g=="All")||(item.gender==g))&&((a=="All")||(item.available&&a=="true")||(!item.available&&a=="false"));
         })
-
+        console.log(userdata)
         const pages = (userdata.length + limit - 1) / limit;
         var paginatedData = [];
         for (let i = 0; i < pages; i++) {
@@ -50,8 +50,8 @@ router.get("/getdata", async (req, res) => {
             paginatedData.push(pageData);
         }
 
-        res.status(201).json(data);
-        // console.log(paginatedData);
+        res.status(201).json(paginatedData);
+        console.log(paginatedData);
     }
     catch (error) {
         console.log(error);
