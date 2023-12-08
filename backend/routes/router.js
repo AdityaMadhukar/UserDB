@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
         }
     }
     catch (err) {
-        res.status(404).send(err);
+        res.status(500).send("Internal server Error", err);
     }
 });
 
@@ -32,7 +32,6 @@ router.post("/create", async (req, res) => {
 router.get("/getdata", async (req, res) => {
     try {
         const {q, g, a} = req.query;
-        console.log(a);
         const data = await users.find();
         const limit = 20;
 
@@ -51,7 +50,7 @@ router.get("/getdata", async (req, res) => {
             paginatedData.push(pageData);
         }
 
-        res.status(201).json(paginatedData);
+        res.status(201).json(data);
         // console.log(paginatedData);
     }
     catch (error) {
@@ -59,6 +58,31 @@ router.get("/getdata", async (req, res) => {
         res.status(500).json({error: true, message: "Internal Server Error"});
     }
 });
+
+
+router.put("/edit/:id", async(req, res)=>{
+    try{
+        const id = req.params.id;
+        const updateduser = await users.findByIdAndUpdate(id, req.body, {
+            new:true
+        })
+
+        res.status(201).json(updateduser);
+    }catch(error){
+        res.status(422).json(error);
+    }
+})
+
+router.delete("/delete/:id", async(req, res)=>{
+    try{
+        const id = req.params.id;
+        const deleteduser = await users.findByIdAndDelete({_id:id})
+
+        res.status(201).json(deleteduser);
+    }catch(error){
+        res.status(422).json(error);
+    }
+})
 
 
 

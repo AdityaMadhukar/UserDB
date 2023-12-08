@@ -131,7 +131,7 @@ const Dashboard = () => {
 
             <div className="m-5">
                 <div class="grid grid-cols-4 gap-5">
-                    {userData && userData[pageno-1]?.map((item, key) => {
+                    {userData[pageno-1] && userData[pageno-1].map((item, key) => {
                         return (
                             <div class="..."><Card item={item} /></div>
                         )
