@@ -32,7 +32,8 @@ const Modal = (props) => {
                 first_name, last_name, email, gender, domain, available, avatar
             })
         })
-        const data = await res.json();
+        const data = res;
+        console.log(data);
         if(res.status ==404 || !data){
             alert(data)
         }

@@ -20,6 +20,7 @@ const Dashboard = () => {
         })
     }
     const getdata = async () => {
+        console.log(query, filterVal);
         const res = await fetch(`/getdata?q=${query}&g=${filterVal.gender}&a=${filterVal.available}`, {
             method: "GET",
             headers: {

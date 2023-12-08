@@ -32,6 +32,7 @@ router.post("/create", async (req, res) => {
 router.get("/getdata", async (req, res) => {
     try {
         const {q, g, a} = req.query;
+        console.log(q, g, a);
         const data = await users.find();
         const limit = 20;
 
@@ -40,7 +41,7 @@ router.get("/getdata", async (req, res) => {
         var userdata = data.filter((item) => {
             return keys.some((key)=> item[key].toLowerCase().includes(q))&&((g=="All")||(item.gender==g))&&((a=="All")||(item.available&&a=="true")||(!item.available&&a=="false"));
         })
-        console.log(userdata)
+        // console.log(data)
         const pages = (userdata.length + limit - 1) / limit;
         var paginatedData = [];
         for (let i = 0; i < pages; i++) {
