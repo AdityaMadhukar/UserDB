@@ -21,7 +21,7 @@ const Modal = (props) => {
     }
     const handleAdd = async (e) => {
         
-        console.log(inpval);
+        // console.log(inpval);
         const {first_name, last_name, email, gender, domain, available, avatar} = inpval;
         const res= await fetch("/create", {
             method:"POST",
