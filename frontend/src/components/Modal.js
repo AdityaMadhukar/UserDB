@@ -21,7 +21,7 @@ const Modal = (props) => {
     }
     const handleAdd = async (e) => {
         
-        // console.log(inpval);
+        console.log(inpval);
         const {first_name, last_name, email, gender, domain, available, avatar} = inpval;
         const res= await fetch("/create", {
             method:"POST",
@@ -32,7 +32,7 @@ const Modal = (props) => {
                 first_name, last_name, email, gender, domain, available, avatar
             })
         })
-        const data = res;
+        const data = await res.json(JSON.stringify(res));
         console.log(data);
         if(res.status ==404 || !data){
             alert(data)

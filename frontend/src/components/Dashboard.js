@@ -27,7 +27,7 @@ const Dashboard = () => {
                 "Content-Type": "application/json"
             }
         })
-        const data = await res.json();
+        const data = await res.json(JSON.stringify(res));
         console.log(data);
         if (res.status == 404 || !data) {
             console.log("error")
