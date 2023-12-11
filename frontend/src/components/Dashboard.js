@@ -24,7 +24,7 @@ const Dashboard = () => {
 
     const getdata = async () => {
         try {
-            const response = await axios.get(`/getdata`, {
+            const response = await axios.get(`https://userdb-backend.onrender.com/getdata`, {
                 params: {
                     q: query,
                     g: filterVal.gender,

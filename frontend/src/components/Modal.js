@@ -23,7 +23,7 @@ const Modal = (props) => {
         
         // console.log(inpval);
         const {first_name, last_name, email, gender, domain, available, avatar} = inpval;
-        const res= await fetch("/create", {
+        const res= await fetch("https://userdb-backend.onrender.com/create", {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
