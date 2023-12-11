@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Card from './Card'
 
-const Dashboard = () => {
+const Dashboard = (props) => {
     const [userData, setUserData] = useState();
     const [pageno, setPageno] = useState(1);
     const [query, setQuery] = useState("");
@@ -144,7 +144,7 @@ const Dashboard = () => {
                 <div class="grid grid-cols-4 gap-5">
                     {userData && userData[pageno - 1]?.map((item, key) => {
                         return (
-                            <div class="..."><Card item={item} /></div>
+                            <div class="..."><Card item={item}/></div>
                         )
                     })}
                 </div></div>
@@ -154,4 +154,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Dashboard;

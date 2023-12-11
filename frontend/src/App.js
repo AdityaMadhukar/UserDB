@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import Modal from './components/Modal';
 
+
 function App() {
   const [modal, setModal] = useState(false);
   return (
