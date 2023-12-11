@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import Card from './Card'
 
 const Dashboard = () => {
@@ -6,9 +7,9 @@ const Dashboard = () => {
     const [pageno, setPageno] = useState(1);
     const [query, setQuery] = useState("");
     const [filterVal, setFilterVal] = useState({
-        gender:"All",
-        domain:"All",
-        available:"All",
+        gender: "All",
+        domain: "All",
+        available: "All",
     });
     const setdata = (e) => {
         const { name, value } = e.target;
@@ -19,28 +20,37 @@ const Dashboard = () => {
             }
         })
     }
+
+
     const getdata = async () => {
-        // console.log(query, filterVal);
-        const res = await fetch(`/getdata?q=${query}&g=${filterVal.gender}&a=${filterVal.available}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const data = await res.json(JSON.stringify(res));
-        console.log(data);
-        if (res.status == 404 || !data) {
-            console.log("error")
-        }
-        else {
-            console.log("data fetched");
+        try {
+            const response = await axios.get(`/getdata`, {
+                params: {
+                    q: query,
+                    g: filterVal.gender,
+                    a: filterVal.available
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = response.data;
+
+            console.log(data);
+
+            // Assuming setUserData is a function that sets the state or processes the data
             setUserData(data);
+            console.log("Data fetched");
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
         }
-    }
+    };
+
 
     useEffect(() => {
-        getdata(pageno);
-    },[query])
+        getdata();
+    }, [query])
 
     return (
         <div>
@@ -49,7 +59,7 @@ const Dashboard = () => {
                     <div class="flex">
                         <input type="text" placeholder="Search"
                             class=" md:w-80 px-3 h-10 rounded-l border-2 border-gray-800 focus:outline-none focus:border-gray-800"
-                            onChange={(e)=>{setQuery(e.target.value)}}
+                            onChange={(e) => { setQuery(e.target.value) }}
                         />
                         <button class="bg-gray-800 text-white rounded-r px-2 md:px-3 py-0 md:py-1" onClick={() => { }}>Search</button>
                     </div>
@@ -62,7 +72,7 @@ const Dashboard = () => {
                     <option value="Gender">Gender</option>
                     <option value="Availibilty">Availibilty</option>
                 </select> */}
-                <select name="gender" value={filterVal.gender} onChange={(e)=>{setdata(e)}}
+                <select name="gender" value={filterVal.gender} onChange={(e) => { setdata(e) }}
                     class=" h-10 border-2 border-gray-800 focus:outline-none focus:border-gray-800 text-gray-800 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider">
                     <option value="All" selected="">Gender</option>
                     <option value="Abinary">Abinary</option>
@@ -83,13 +93,13 @@ const Dashboard = () => {
                     <option value="Transgender">Transgender</option>
                     <option value="Trigender">Trigender</option>
                 </select>
-                <select name="available" value={filterVal.available} onChange={(e)=>{setdata(e)}}
+                <select name="available" value={filterVal.available} onChange={(e) => { setdata(e) }}
                     class=" h-10 border-2 border-gray-800 focus:outline-none focus:border-gray-800 text-gray-800 rounded px-2 md:px-3 py-0 md:py-1 tracking-wider">
                     <option value="All" selected="">Availability</option>
                     <option value={true}>True</option>
                     <option value={false}>False</option>
                 </select>
-                <button onClick={()=>{getdata()}} class="bg-gray-800 h-10 text-white rounded px-2 md:px-3 py-0 md:py-1">Filter</button>
+                <button onClick={() => { getdata() }} class="bg-gray-800 h-10 text-white rounded px-2 md:px-3 py-0 md:py-1">Filter</button>
             </div>
 
 
@@ -120,7 +130,7 @@ const Dashboard = () => {
                         <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={()=>{setPageno(pageno+2)}}>{pageno +4}</a>
                     </li> */}
                     <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => { if (pageno < userData?.length-1) setPageno(pageno + 1) }}>
+                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => { if (pageno < userData?.length - 1) setPageno(pageno + 1) }}>
                             <span class="sr-only">Next</span>
                             <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
@@ -132,7 +142,7 @@ const Dashboard = () => {
 
             <div className="m-5">
                 <div class="grid grid-cols-4 gap-5">
-                    {userData && userData[pageno-1]?.map((item, key) => {
+                    {userData && userData[pageno - 1]?.map((item, key) => {
                         return (
                             <div class="..."><Card item={item} /></div>
                         )
