@@ -35,7 +35,7 @@ const Dashboard = () => {
                 }
             });
 
-            const data = await response.json();
+            const data = response.data;
 
             console.log(data);
 
